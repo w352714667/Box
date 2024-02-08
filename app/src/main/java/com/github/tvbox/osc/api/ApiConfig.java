@@ -130,7 +130,7 @@ public class ApiConfig {
 
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required
-        String apiUrl = Hawk.get(HawkConfig.API_URL, "https://gitee.com/WanNenDeQunZhu/omnipotent/raw/master/db.txt");
+        String apiUrl = Hawk.get(HawkConfig.API_URL, HomeActivity.getRes().getString(R.string.app_source));
         if (apiUrl.isEmpty()) {
             callback.error("源地址为空");
             return;
@@ -512,8 +512,8 @@ public class ApiConfig {
                         hosts.add(host.getAsString());
                     }
                 } else continue;
-                if (obj.has("rule")) {
-                    JsonArray ruleJsonArr = obj.getAsJsonArray("rule");
+                if (obj.has("rule") || obj.has("regex")) {
+                    JsonArray ruleJsonArr = obj.has("regex")?obj.getAsJsonArray("regex"):obj.getAsJsonArray("rule");
                     ArrayList<String> rule = new ArrayList<>();
                     for (JsonElement one : ruleJsonArr) {
                         String oneRule = one.getAsString();
